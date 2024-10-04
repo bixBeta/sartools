@@ -5,13 +5,13 @@ display_usage(){
   echo "run the script using the following syntax:"
   echo "    bash scriptName <-k3> <Report_Title> <Genome> <Annot>"
   echo ""
-  echo " -k1  = knit with all headers (including MA-plot)"
-  echo " -k2  = knit with all headers Filtered (2 projects e.g. PCA-flt.png)"
-  echo " -k3  = knit w/o GeneBodyCov"
-  echo " -k4  = knit w/o GeneBodyCov Filtered (2 projects e.g. PCA-flt.png)"
-  echo " -a1  = knit atac"
-  echo " -a2  = knit atac Filtered (2 projects e.g. PCA-flt.png)"
-  echo " -s1  = knit smRNA"
+  echo " k1  = knit with all headers (including MA-plot)"
+  echo " k2  = knit with all headers Filtered (2 projects e.g. PCA-flt.png)"
+  echo " k3  = knit w/o GeneBodyCov"
+  echo " k4  = knit w/o GeneBodyCov Filtered (2 projects e.g. PCA-flt.png)"
+  echo " a1  = knit atac"
+  echo " a2  = knit atac Filtered (2 projects e.g. PCA-flt.png)"
+  echo " s1  = knit smRNA"
   echo "------------------------------------------------------------------------------------------------------------------"
 }
 
@@ -97,31 +97,31 @@ knit_smrna(){
 
 
 case ${quarto} in
-    -h|--help)
+    h|--help)
       display_usage
       ;;
-    -k1|--knit1)
+    k1|--knit1)
       knit_full_report
       ;;
-    -k2|--knit2)
+    k2|--knit2)
       knit_full_filtered
       ;;
-    -k3|--knit3)
+    k3|--knit3)
       knit_nogbcov
       ;;
-    -k4|--knit4)
+    k4|--knit4)
       knit_nogbcov_filtered
       ;;
 
-    -a1)
+    a1)
     knit_atac
      ;;
 
-    -a2)
+    a2)
       knit_atac_filtered
       ;;
 
-    -s1)
+    s1)
       knit_smrna
       ;;
 
