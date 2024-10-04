@@ -1,0 +1,112 @@
+---
+params:
+  title: title
+  id: trex_id
+  genome: genome
+  annot: annot
+date: today
+
+
+title:  "`r params$title`"
+author: <a href="https://trex.biotech.cornell.edu/"> Transcriptional Regulation & Expression Facility </a>
+format: 
+  html:
+    standalone: true
+    embed-resources: true
+    toc: true
+    toc-location: left
+    toc-title: "Summary"
+    grid: 
+      content-mode: full
+      sidebar-width: 350px
+      body-width: 1600px
+---
+
+------------------------------------------------------------------------
+
+```{=html}
+<style type="text/css">
+  .quarto-title-banner {
+    height: 100px; /* Adjust the height value as needed */
+  }
+.main-container {
+  max-width: 90% !important;
+  margin: auto;
+}
+.quarto-title-meta-contents a:hover {
+  color: #c44900; 
+}
+.trex-logo:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease-in-out;
+  transform-origin: right center;
+}
+
+
+
+
+
+</style>
+```
+[![](https://raw.githubusercontent.com/bixBeta/atac/main/img/trex-mini.png){.trex-logo fig-align="right"}](https://trex.biotech.cornell.edu/)
+
+<hr>
+
+  
+This R Markdown aims to provide a brief summary of all diagnostic plots for your TREx experiment.<br> Fastq files are available for download upon request.
+
+> Users receiving files from RSCshare are advised to delete all files once they have secure copied them to their own respective drives.<br> A copy of your data will be securely archived on our end and may incur a fee for future retrievals.
+
+### Sample Tracking
+
+```{r echo=F, eval = T, warning=F, message=F}
+
+tf <- read.delim("targetFile.txt")
+
+library(DT)
+library(dplyr)
+datatable(tf, options = list(scrollX = TRUE)) |>
+  DT::formatStyle(names(tf),lineHeight='100%')
+
+```
+
+
+The filtered/trimmed reads were processed with mirDeep2 ` `r params$genome` ` reference and ` `r params$annot` ` annotations <br>
+  
+
+
+## Counts Distribution
+  
+![](./countsBoxplots.png){width="1200px"}
+
+Post-normalization, the medians should be consistent across samples and more similar between biological replicates.
+
+
+## Sample Clustering
+
+![](./cluster.png){width="800px"}
+
+An euclidean distance is computed between samples, and the dendrogram is built upon the Ward criterion. We expect this dendrogram to group replicates and separate biological conditions.
+
+## Principal Components Analysis
+
+![](./PCA.png){width="1200px"}
+
+Another way of visualizing the experiment variability is to look at the first principal components of the PCA. On this figure, the first principal component (PC1) is expected to separate samples from the different biological conditions, meaning that the biological variability is the main source of variance in the data.
+
+## MA-Plots
+
+![](./MAPlot.png){width="1000px"}
+
+The above figure represents the MA-plot of the data for the comparisons done, where differentially expressed features are highlighted in red. A MA-plot represents the log ratio of differential expression as a function of the mean intensity for each feature. Triangles correspond to features having a too low/high log2(FC) to be displayed on the plot.
+
+## Citations
+
+<details>
+  
+```{r echo=TRUE, eval=T}
+citation("DESeq2")
+citation("SARTools")
+```
+
+</details>

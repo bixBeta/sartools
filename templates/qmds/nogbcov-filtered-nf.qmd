@@ -1,0 +1,208 @@
+---
+params:
+  title: title
+  id: trex_id
+  genome: genome
+  annot: annot
+date: today
+
+
+title:  "`r params$title`"
+author: <a href="https://trex.biotech.cornell.edu/"> Transcriptional Regulation & Expression Facility </a>
+format: 
+  html:
+    standalone: true
+    embed-resources: true
+    toc: true
+    toc-location: left
+    toc-title: "Summary"
+    grid: 
+      content-mode: full
+      sidebar-width: 350px
+      body-width: 1600px
+---
+
+------------------------------------------------------------------------
+
+```{=html}
+<style type="text/css">
+  .quarto-title-banner {
+    height: 100px; /* Adjust the height value as needed */
+  }
+.main-container {
+  max-width: 90% !important;
+  margin: auto;
+}
+.quarto-title-meta-contents a:hover {
+  color: #c44900; 
+}
+.trex-logo:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease-in-out;
+  transform-origin: right center;
+}
+
+
+
+
+
+</style>
+```
+[![](https://raw.githubusercontent.com/bixBeta/atac/main/img/trex-mini.png){.trex-logo fig-align="right"}](https://trex.biotech.cornell.edu/)
+
+<hr>
+
+  
+This R Markdown aims to provide a brief summary of all diagnostic plots for your TREx experiment.<br> Fastq files are available for download upon request.
+
+> Users receiving files from RSCshare are advised to delete all files once they have secure copied them to their own respective drives.<br> A copy of your data will be securely archived on our end and may incur a fee for future retrievals.
+
+### Sample Tracking
+
+```{r echo=F, eval = T, warning=F, message=F}
+
+tf <- read.delim("targetFile.txt")
+
+library(DT)
+library(dplyr)
+datatable(tf, options = list(scrollX = TRUE)) |>
+  DT::formatStyle(names(tf),lineHeight='100%')
+
+```
+
+## Pre-Processing
+
+The raw fastq reads were first processed with __fastp__  package to:
+
+
+- Trim for low quality reads;
+- 2 color chemistry bias (next-seq);
+- Trim for noisy short fragments;
+- Trim for adapter sequence;
+
+```{bash echo=TRUE, eval=FALSE}
+            fastp \
+            -z 4 -w 16 \
+            --length_required 50 --qualified_quality_phred 20 \
+            --trim_poly_g \
+            -i ${reads[0]} \
+            -I ${reads[1]} \
+            -o ${id}_val_1.fq.gz \
+            -O ${id}_val_2.fq.gz \
+            -h ${id}.fastp.html \
+            -j ${id}.fastp.json
+```
+
+The filtered reads were then aligned to ` `r params$genome` ` reference genome with ` `r params$annot` ` annotations <br>
+  
+The multiqc html (separate file), summarises the alignment statistics along with the summary of raw counts generated via <a href="https://academic.oup.com/bioinformatics/article/29/1/15/272537"> STAR </a>
+  
+
+## Counts Distribution
+  
+![](./countsBoxplots.png){width="1200px"}
+
+Post-normalization, the medians should be consistent across samples and more similar between biological replicates.
+
+
+## Sample Clustering
+
+
+```{r , fig.show='hold', echo=F, results='asis'}
+
+# Begin the tabset panel
+cat('::: {.panel-tabset}\n')
+
+p1 <- list.files("./", pattern = "cluster", full.names = T)
+
+cat(paste0('## Cluster - All Samples ', '\n\n'))
+
+cat(paste0("![](", p1[grep("flt", p1, invert = T)] , ")", "{width=800}" ))
+
+cat('\n\n')
+
+cat(paste0('## Cluster - Filtered ', '\n\n'))
+
+cat(paste0("![](", p1[grep("flt", p1, invert = F)] , ")", "{width=800}" ))
+
+cat('\n\n')
+
+# End the tabset panel
+cat(':::\n')
+
+```
+
+An euclidean distance is computed between samples, and the dendrogram is built upon the Ward criterion. We expect this dendrogram to group replicates and separate biological conditions.
+
+## Principal Components Analysis
+
+
+
+```{r , fig.show='hold', echo=F, results='asis'}
+
+# Begin the tabset panel
+cat('::: {.panel-tabset}\n')
+
+p2 <- list.files("./", pattern = "PCA", full.names = T)
+
+cat(paste0('## PCA - All Samples ', '\n\n'))
+
+cat(paste0("![](", p2[grep("flt", p2, invert = T)] , ")", "{width=1000}" ))
+
+cat('\n\n')
+
+cat(paste0('## PCA - Filtered ', '\n\n'))
+
+cat(paste0("![](", p2[grep("flt", p2, invert = F)] , ")", "{width=1000}" ))
+
+cat('\n\n')
+
+# End the tabset panel
+cat(':::\n')
+
+```
+Another way of visualizing the experiment variability is to look at the first principal components of the PCA. On this figure, the first principal component (PC1) is expected to separate samples from the different biological conditions, meaning that the biological variability is the main source of variance in the data.
+
+## MA-Plots
+
+
+```{r , fig.show='hold', echo=F, results='asis'}
+
+# Begin the tabset panel
+cat('::: {.panel-tabset}\n')
+
+p3 <- list.files("./", pattern = "MAPlot", full.names = T)
+
+cat(paste0('## MA - All Samples ', '\n\n'))
+
+cat(paste0("![](", p3[grep("flt", p3, invert = T)] , ")", "{width=800}" ))
+
+cat('\n\n')
+
+cat(paste0('## MA - Filtered ', '\n\n'))
+
+cat(paste0("![](", p3[grep("flt", p3, invert = F)] , ")", "{width=800}" ))
+
+cat('\n\n')
+
+# End the tabset panel
+cat(':::\n')
+
+```
+
+The above figure represents the MA-plot of the data for the comparisons done, where differentially expressed features are highlighted in red. A MA-plot represents the log ratio of differential expression as a function of the mean intensity for each feature. Triangles correspond to features having a too low/high log2(FC) to be displayed on the plot.
+
+
+
+
+## Citations
+
+<details>
+  
+```{r echo=TRUE, eval=T}
+citation("DESeq2")
+citation("SARTools")
+```
+
+</details>
+  
