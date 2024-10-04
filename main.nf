@@ -30,7 +30,7 @@ meta_ch = ch_target
 if( params.help ) {
 
 log.info """
-S A  R T O O L S     W O R K F L O W  -  @bixBeta
+S A R  T O O L S     W O R K F L O W  -  @bixBeta
 =======================================================================================================================================================================
 Usage:
     nextflow run https://github.com/bixbeta/sartools -r main < args ... >
