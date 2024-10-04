@@ -36,7 +36,6 @@ Usage:
     nextflow run https://github.com/bixbeta/sartools -r main < args ... >
 
 Args:
-    * --listGenomes    : Get extended list of genomes available for this pipeline
     * --id             : TREx Project ID 
     * --ref            : Base Level (Denominator for log2FC calcs, must be in the group column of targetFile)
     * --target         : targetFile.txt (tab delim file with label, files and group mandatory columns)
