@@ -3,7 +3,8 @@ args <-  commandArgs(trailingOnly = T)
 pin <- args[1]
 ref <- args[2]
 targetFile <- args[3]
-templates <- args[4]
+wd <- args[4]
+templates <- args[5]
 
 if (length(args)<=1) {
   print(" Usage = Rscript test.R <pin> <base-line>")
@@ -13,7 +14,7 @@ if (length(args)<=1) {
 
 library(SARTools)
 getwd()
-workDir <- getwd()      								# working directory for the R session
+workDir <- wd      								# working directory for the R session
 
 projectName <- pin                      				# name of the project
 author <- "RSC"                                			# author of the statistical analysis/report
