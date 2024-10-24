@@ -81,7 +81,7 @@ The raw fastq reads were first processed with __fastp__  package to:
 
 The filtered reads were then aligned to ` `r params$genome` ` reference genome with ` `r params$annot` ` annotations <br>
   
-The multiqc html (separate file), summarises the alignment statistics along with the summary of raw counts generated via <a href="https://academic.oup.com/bioinformatics/article/29/1/15/272537"> STAR </a> <br> For detailed parameters used in TREx pipeline please refer to the code modules available on Github at <a href="https://github.com/bixBeta/nextflow/tree/main/modules">this </a> link. 
+The multiqc html (separate file), summarises the alignment statistics along with the summary of raw counts generated via <a href="https://academic.oup.com/bioinformatics/article/29/1/15/272537"> STAR </a> <br> For default parameters used within TREx pipeline's, please refer to the code modules available on Github at <a href="https://github.com/bixBeta/nextflow/tree/main/modules">this </a> link. 
   
 
 ## Counts Distribution
