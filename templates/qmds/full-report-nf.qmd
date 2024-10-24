@@ -78,22 +78,10 @@ The raw fastq reads were first processed with __fastp__  package to:
 - Trim for noisy short fragments;
 - Trim for adapter sequence;
 
-```{bash echo=TRUE, eval=FALSE}
-            fastp \
-            -z 4 -w 16 \
-            --length_required 50 --qualified_quality_phred 20 \
-            --trim_poly_g \
-            -i ${reads[0]} \
-            -I ${reads[1]} \
-            -o ${id}_val_1.fq.gz \
-            -O ${id}_val_2.fq.gz \
-            -h ${id}.fastp.html \
-            -j ${id}.fastp.json
-```
 
 The filtered reads were then aligned to ` `r params$genome` ` reference genome with ` `r params$annot` ` annotations <br>
   
-The multiqc html (separate file), summarises the alignment statistics along with the summary of raw counts generated via <a href="https://academic.oup.com/bioinformatics/article/29/1/15/272537"> STAR </a>
+The multiqc html (separate file), summarises the alignment statistics along with the summary of raw counts generated via <a href="https://academic.oup.com/bioinformatics/article/29/1/15/272537"> STAR </a> <br> For detailed parameters used in TREx pipeline please refer to the code modules available on Github at <a href="https://github.com/bixBeta/nextflow/tree/main/modules">this </a> link. 
   
 
 ## Counts Distribution
