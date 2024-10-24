@@ -14,7 +14,7 @@ if (length(args)<=1) {
 
 library(SARTools)
 getwd()
-workDir <- wd      								# working directory for the R session
+workDir <- setwd(wd)      								# working directory for the R session
 
 projectName <- pin                      				# name of the project
 author <- "RSC"                                			# author of the statistical analysis/report
