@@ -40,7 +40,7 @@ Args:
     * --ref            : Base Level (Denominator for log2FC calcs, must be in the group column of targetFile)
     * --target         : targetFile.txt (tab delim file with label, files and group mandatory columns)
     * --genome         : Reference genome (GRCh38, GRCm38 etc.)
-    * --quarto         : < default: -k3 > (render params used in makeReport.sh)
+    * --quarto         : < default: k3 > (render params used in makeReport.sh)
     * --annots         : Annotations source (NCBI or < default: ENSEMBL >)
 
 """
