@@ -19,7 +19,7 @@ display_usage(){
 
 knit_full_report(){
 
-  scp ${launchDir}/templates/qmds/full-report-nf.qmd .
+  scp ${projectDir}/templates/qmds/full-report-nf.qmd .
   
   quarto render full-report-nf.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
 
@@ -29,7 +29,7 @@ knit_full_report(){
 
 knit_full_filtered(){
 
-  scp ${launchDir}/templates/qmds/full-report-nf-filtered.qmd .
+  scp ${projectDir}/templates/qmds/full-report-nf-filtered.qmd .
   
   quarto render full-report-nf-filtered.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
 
@@ -40,7 +40,7 @@ knit_full_filtered(){
 
 knit_nogbcov(){
 
-  scp ${launchDir}/templates/qmds/nogbcov-report-nf.qmd .
+  scp ${projectDir}/templates/qmds/nogbcov-report-nf.qmd .
   
   quarto render nogbcov-report-nf.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
 
@@ -51,7 +51,7 @@ knit_nogbcov(){
 
 knit_nogbcov_filtered(){
 
-  scp ${launchDir}/templates/qmds/nogbcov-filtered-nf.qmd .
+  scp ${projectDir}/templates/qmds/nogbcov-filtered-nf.qmd .
   
   quarto render nogbcov-filtered-nf.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
 
@@ -62,7 +62,7 @@ knit_nogbcov_filtered(){
 
 knit_atac(){
 
-  scp ${launchDir}/templates/qmds/atac-nf.qmd .
+  scp ${projectDir}/templates/qmds/atac-nf.qmd .
   
   quarto render atac-nf.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
 
@@ -73,7 +73,7 @@ knit_atac(){
 
 knit_atac_filtered(){
 
-  scp ${launchDir}/templates/qmds/atac-filtered-nf.qmd .
+  scp ${projectDir}/templates/qmds/atac-filtered-nf.qmd .
   
   quarto render atac-filtered-nf.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
 
@@ -84,7 +84,7 @@ knit_atac_filtered(){
 
 knit_smrna(){
 
-  scp ${launchDir}/templates/qmds/smrna.qmd .
+  scp ${projectDir}/templates/qmds/smrna.qmd .
   
   quarto render smrna.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
 
