@@ -156,9 +156,11 @@ workflow  NOGBC {
 workflow  GBC {
 
         SARTOOLS(params.id, params.ref, ch_target, ch_counts)
-        
+        GBCOV(params.gbcov)
+
         ch_figures = SARTOOLS.out.figures
                         .concat(GBCOV.out.gbpng)
+                        .view()
         
         ch_all     = SARTOOLS.out.sartoolsOut
         
