@@ -169,6 +169,7 @@ workflow  GBC {
 
         ch_figures = SARTOOLS.out.figures
                         .concat(GBCOV.out.gbpng)
+                        .collect()
                         .view()
         
         ch_all     = SARTOOLS.out.sartoolsOut
