@@ -8,7 +8,5 @@ do
 done
 
 
-mv *.png figures
-
 
 

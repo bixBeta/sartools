@@ -8,9 +8,10 @@ params.id               = "TREX_id"
 params.genome           = "null"
 params.annots           = "ENSEMBL"       
 params.ref              = null 
-params.quarto           = "-k3"
+params.quarto           = "k3"
 params.counts           = "${launchDir}/rawCounts/*rawCounts"
 params.help             = false
+params.gbcov            = "${launchDir}/GBCOV"
 
 // Input Channels: 
 
@@ -110,7 +111,30 @@ process QMD {
 
 }
 
+process GBCOV {
 
+        tag "${id}"
+        label "gbcov"
+
+        input:
+            path(gbcov)
+
+        
+        output:
+
+            path "*.png"            , emit: gbpng
+
+        when:
+            params.quarto = "k1"
+
+        
+        script: 
+
+            template "pdf2png.sh"
+
+
+
+}
 
 
 
@@ -121,6 +145,9 @@ workflow  {
         SARTOOLS(params.id, params.ref, ch_target, ch_counts)
         
         ch_figures = SARTOOLS.out.figures
+        ch_figures
+                | view 
+        
         ch_all     = SARTOOLS.out.sartoolsOut
         
         QMD(params.id, params.ref, ch_target, ch_figures, params.quarto, params.genome, params.annots)
