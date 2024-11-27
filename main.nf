@@ -122,7 +122,7 @@ process GBCOV {
         
         output:
 
-            path "*.png"            , emit: gbpng
+            path "${launchDir}/GBCOV/*png"            , emit: gbpng
 
         when:
             params.quarto == "k1"
