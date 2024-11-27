@@ -125,7 +125,7 @@ process GBCOV {
             path "*.png"            , emit: gbpng
 
         when:
-            params.quarto = "k1"
+            params.quarto == "k1"
 
         
         script: 
@@ -140,16 +140,42 @@ process GBCOV {
 
 
 
-workflow  {
+workflow  NOGBC {
 
         SARTOOLS(params.id, params.ref, ch_target, ch_counts)
         
         ch_figures = SARTOOLS.out.figures
-        ch_figures
-                | view 
         
         ch_all     = SARTOOLS.out.sartoolsOut
         
         QMD(params.id, params.ref, ch_target, ch_figures, params.quarto, params.genome, params.annots)
 
+}
+
+
+workflow  GBC {
+
+        SARTOOLS(params.id, params.ref, ch_target, ch_counts)
+        
+        ch_figures = SARTOOLS.out.figures
+                        .concat(GBCOV.out.gbpng)
+        
+        ch_all     = SARTOOLS.out.sartoolsOut
+        
+        QMD(params.id, params.ref, ch_target, ch_figures, params.quarto, params.genome, params.annots)
+
+}
+
+
+workflow {
+
+    if ( params.quarto == "k1") {
+
+        GBC
+    } 
+
+    else {
+
+        NOGBC
+    }
 }
