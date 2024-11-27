@@ -171,11 +171,11 @@ workflow {
 
     if ( params.quarto == "k1") {
 
-        GBC
+        GBC()
     } 
 
     else {
 
-        NOGBC
+        NOGBC()
     }
 }
