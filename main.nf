@@ -11,7 +11,7 @@ params.ref              = null
 params.quarto           = "k3"
 params.counts           = "${launchDir}/rawCounts/*rawCounts"
 params.help             = false
-params.gbcov            = "${launchDir}/GBCOV"
+params.gbcov            = "${launchDir}/GBCOV/*pdf"
 
 // Input Channels: 
 
@@ -117,7 +117,7 @@ process GBCOV {
         label "gbcov"
 
         input:
-            path(gbcov)
+            path(pdf)
 
         
         output:
@@ -130,7 +130,11 @@ process GBCOV {
         
         script: 
 
-            template "pdf2png.sh"
+            """
+            convert -density 300 ${pdf[0]} curves.png
+            convert -density 300 ${pdf[1]} heatMap.png
+
+            """
 
 
 
@@ -156,7 +160,12 @@ workflow  NOGBC {
 workflow  GBC {
 
         SARTOOLS(params.id, params.ref, ch_target, ch_counts)
-        GBCOV(params.gbcov)
+
+        ch_pdf = channel.fromPath(params.gbcov)
+                    | collect
+                    | view
+
+        GBCOV(ch_pdf)
 
         ch_figures = SARTOOLS.out.figures
                         .concat(GBCOV.out.gbpng)
