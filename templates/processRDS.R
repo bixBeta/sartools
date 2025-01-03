@@ -69,5 +69,5 @@ dev.off()
 
 
 write.csv(pca_rds$PCA.df, file = paste0(pin, "_EIGENVALUES.csv"))
-write.table(target, file = paste0(pin, "_targetFile.txt"), quote = F)
+write.table(target, file = paste0(pin, "_targetFile.txt"), quote = F, sep = "\t")
 saveRDS(pca_rds, file = paste0(pin, "_PCA_EIGEN.RDS"))
