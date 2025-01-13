@@ -51,6 +51,7 @@ getPCAs= function(vst_, target_){
 }
 
 pca_rds = getPCAs(vst_ = vst, target_ = target)
+pca_rds$rawCounts = counts(dds, normalized = F)
 
 suppressPackageStartupMessages(library(ggrepel))
 suppressPackageStartupMessages(library(ggplot2))
