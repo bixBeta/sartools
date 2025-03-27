@@ -431,7 +431,7 @@ process SAR {
             if (length(contrasts.list.final) == 1) {
             
             
-            write.table(ref.df, paste0(arg[1],".final.txt"), sep = "\t", quote = F, row.names = F)
+            write.table(ref.df, paste0(${id},".final.txt"), sep = "\t", quote = F, row.names = F)
             system(paste("mv *.final.txt ../ "))
             
 
@@ -451,7 +451,7 @@ process SAR {
             table.joined = suppressMessages(Reduce(f = full_join, tables.for.join))
             
             final.df = left_join(ref.df, table.joined, by = "Id")
-            write.table(final.df, paste0(arg[1],".final.txt"), sep = "\t", quote = F, row.names = F)
+            write.table(final.df, paste0(${id},".final.txt"), sep = "\t", quote = F, row.names = F)
             
             # system(paste("mv *.final.txt ../ "))
 
