@@ -331,7 +331,7 @@ workflow  NOGBC {
         
         ch_figures = SARTOOLS.out.figures
         
-        ch_all     = SARTOOLS.out.sartoolsOut
+//        ch_all     = SARTOOLS.out.sartoolsOut
         ch_qmd     = channel.value("${projectDir}/assets/qmds/nogbcov-report-nf.qmd")
         ch_qmd
             | view
