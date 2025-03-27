@@ -69,7 +69,7 @@ process SARTOOLS {
         output:
              path "*"                              , emit: sartoolsOut
              path "figures/*png"                   , emit: figures
-
+             path "tables/*txt"                    , emit: tables
 
         script:
 
@@ -212,24 +212,6 @@ process SARTOOLS {
             
             
             ################################################
-            
-            system(paste0(templates, "/templates/generateRaw.R ", projectName, " *.RData"))
-            
-            #system(paste("mkdir",projectName ))
-            #system(paste("mv figures *.html *.RData tables *.txt", projectName))
-            
-            setwd("./tables")
-            #system(paste("pwd"))
-            system(paste0(templates, "/templates/vs2_vs_.sh"))
-            system(paste0(templates, "/templates/processSAR-v2.R", " ", projectName))
-            
-            #setwd(projectName)
-            #system(paste0("/Users/faraz/macpro/bin/generateRaw.R ../ ", projectName, " ../*.RData"))
-            
-            
-            setwd("../")
-            
-            system(paste0(templates, "/templates/processRDS.R", " ", projectName, " " ," *.RData"))
 
         """
 
