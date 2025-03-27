@@ -137,20 +137,20 @@ writeReport.DESeq2(target=target, counts=counts, out.DESeq2=out.DESeq2, summaryR
 
 ################################################
 
-system(paste0(templates, "/templates/generateRaw.R ", projectName, " *.RData"))
+# system(paste0(templates, "/templates/generateRaw.R ", projectName, " *.RData"))
 
-#system(paste("mkdir",projectName ))
-#system(paste("mv figures *.html *.RData tables *.txt", projectName))
+# #system(paste("mkdir",projectName ))
+# #system(paste("mv figures *.html *.RData tables *.txt", projectName))
 
-setwd("./tables")
-#system(paste("pwd"))
-system(paste0(templates, "/templates/vs2_vs_.sh"))
-system(paste0(templates, "/templates/processSAR-v2.R", " ", projectName))
+# setwd("./tables")
+# #system(paste("pwd"))
+# system(paste0(templates, "/templates/vs2_vs_.sh"))
+# system(paste0(templates, "/templates/processSAR-v2.R", " ", projectName))
 
-#setwd(projectName)
-#system(paste0("/Users/faraz/macpro/bin/generateRaw.R ../ ", projectName, " ../*.RData"))
+# #setwd(projectName)
+# #system(paste0("/Users/faraz/macpro/bin/generateRaw.R ../ ", projectName, " ../*.RData"))
 
 
-setwd("../")
+# setwd("../")
 
-system(paste0(templates, "/templates/processRDS.R", " ", projectName, " " ," *.RData"))
+# system(paste0(templates, "/templates/processRDS.R", " ", projectName, " " ," *.RData"))
