@@ -247,7 +247,7 @@ process DS {
             mv *complete* ..
             cd ..
 
-            for i in *complete*; do mv $i `echo $i | sed 's/vs/_vs_/g'` ; done
+            for i in *complete*; do mv \$i `echo \$i | sed 's/vs/_vs_/g'` ; done
 
             """
 
