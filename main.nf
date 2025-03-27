@@ -68,7 +68,8 @@ process SARTOOLS {
             //path "*"                              , emit: sartoolsOut
             path "figures/*png"                   , emit: figures
             path "tables/*txt"                    , emit: tables
-            //path "*_rawCounts.txt"                , emit: rawmatrix
+            path "*_rawCounts.txt"                , emit: rawmatrix
+            
         script:
 
             // template 'bash-template.sh' 
@@ -222,7 +223,7 @@ process DS {
         tag "${id}"
         label "process_sartools"
 
-        //publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*.txt"
+        // publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*.txt"
         // publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*_EIGENVALUES.csv"
         // publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*_PC1_PC2.png"
 
