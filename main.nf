@@ -84,11 +84,6 @@ process SARTOOLS {
             wd <- "${launchDir}"
             templates <- "${projectDir}"
             
-            if (length(args)<=1) {
-              print(" Usage = Rscript test.R <pin> <base-line>")
-              stop("Both arguments must be supplied!!! \n", call.=FALSE)
-            
-            }
             
             library(SARTools)
             getwd()
