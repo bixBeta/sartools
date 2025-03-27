@@ -55,7 +55,7 @@ process SARTOOLS {
         label "process_sartools"
 
         publishDir "${id}_SAR-Tools/"       , mode: 'symlink', overwrite: true, pattern: "*RData"
-        publishDir "${id}_SAR-Tools/raw", mode: 'symlink', overwrite: true, pattern: "*_rawCounts.txt"
+        publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*_rawCounts.txt"
 
         input:
             val(id)
@@ -222,7 +222,7 @@ process DS {
         tag "${id}"
         label "process_sartools"
 
-        publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*.txt"
+        //publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*.txt"
         // publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*_EIGENVALUES.csv"
         // publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*_PC1_PC2.png"
 
