@@ -21,7 +21,7 @@ mkdir -p /tmp/quarto-cache
 
 knit_full_report(){
 
-  scp ${projectDir}/templates/qmds/full-report-nf.qmd .
+  cp ${projectDir}/templates/qmds/full-report-nf.qmd .
   
   quarto render full-report-nf.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
 
@@ -31,7 +31,7 @@ knit_full_report(){
 
 knit_full_filtered(){
 
-  scp ${projectDir}/templates/qmds/full-report-nf-filtered.qmd .
+  cp ${projectDir}/templates/qmds/full-report-nf-filtered.qmd .
   
   quarto render full-report-nf-filtered.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
 
@@ -42,7 +42,7 @@ knit_full_filtered(){
 
 knit_nogbcov(){
 
-  scp ${projectDir}/templates/qmds/nogbcov-report-nf.qmd 
+  cp ${projectDir}/templates/qmds/nogbcov-report-nf.qmd 
   
   quarto render nogbcov-report-nf.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
 
@@ -53,7 +53,7 @@ knit_nogbcov(){
 
 knit_nogbcov_filtered(){
 
-  scp ${projectDir}/templates/qmds/nogbcov-filtered-nf.qmd .
+  cp ${projectDir}/templates/qmds/nogbcov-filtered-nf.qmd .
   
   quarto render nogbcov-filtered-nf.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
 
@@ -64,7 +64,7 @@ knit_nogbcov_filtered(){
 
 knit_atac(){
 
-  scp ${projectDir}/templates/qmds/atac-nf.qmd .
+  cp ${projectDir}/templates/qmds/atac-nf.qmd .
   
   quarto render atac-nf.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
 
@@ -75,7 +75,7 @@ knit_atac(){
 
 knit_atac_filtered(){
 
-  scp ${projectDir}/templates/qmds/atac-filtered-nf.qmd .
+  cp ${projectDir}/templates/qmds/atac-filtered-nf.qmd .
   
   quarto render atac-filtered-nf.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
 
@@ -86,7 +86,7 @@ knit_atac_filtered(){
 
 knit_smrna(){
 
-  scp ${projectDir}/templates/qmds/smrna.qmd .
+  cp ${projectDir}/templates/qmds/smrna.qmd .
   
   quarto render smrna.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
 
