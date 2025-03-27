@@ -55,6 +55,7 @@ process SARTOOLS {
         label "process_sartools"
 
         publishDir "${id}_SAR-Tools/"       , mode: 'symlink', overwrite: true, pattern: "*RData"
+        publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "_rawCounts.txt"
 
         input:
             val(id)
@@ -67,7 +68,7 @@ process SARTOOLS {
              path "*"                              , emit: sartoolsOut
              path "figures/*png"                   , emit: figures
              path "tables/*txt"                    , emit: tables
-
+             path "*_rawCounts.txt"                , emit: rawmatrix
         script:
 
             // template 'bash-template.sh' 
@@ -208,6 +209,8 @@ process SARTOOLS {
             
             
             
+            #load()
+            write.table(counts, paste0(projectName, "_rawCounts.txt"), sep = "\t", quote = F, col.names = NA)
             ################################################
 
         """
