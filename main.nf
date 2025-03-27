@@ -57,6 +57,7 @@ process SARTOOLS {
         publishDir "${id}_SAR-Tools/Reports", mode: 'copy', pattern: "*.txt"
         publishDir "${id}_SAR-Tools/Reports", mode: 'copy', pattern: "*_EIGENVALUES.csv"
         publishDir "${id}_SAR-Tools/Reports", mode: 'copy', pattern: "*_PC1_PC2.png"
+        publishDir "${id}_SAR-Tools/"       , mode: 'copy', pattern: "*RData"
 
         input:
             val(id)
