@@ -66,7 +66,7 @@ process SARTOOLS {
         output:
              path "*"                              , emit: sartoolsOut
              path "figures/*png"                   , emit: figures
-             path "tables/*txt"                    , emit: tables
+             path "tables/"                        , emit: tables
 
         script:
 
@@ -212,51 +212,40 @@ process SARTOOLS {
 
         """
 
-        """
-            cd tables
-            ${projectDir}templates/vs2_vs_.sh 
-            cd ..
-
-        """
-
-
-
 }
 
-// process DS {
+process DS {
 
-//         tag "${id}"
-//         label "process_sartools"
+        tag "${id}"
+        label "process_sartools"
 
-//         publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*.txt"
-//         publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*_EIGENVALUES.csv"
-//         publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*_PC1_PC2.png"
+        publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*.txt"
+        // publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*_EIGENVALUES.csv"
+        // publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*_PC1_PC2.png"
 
-//         input:
-//             val(id)
-//             val(ref)
-//             path(target)
-//             path(ch_counts)
+        input:
+            val(id)
+            path(tables)
 
-//         output:
+            // val(ref)
+            // path(target)
+            // path(ch_counts)
 
+        output:
 
-
-//         script:
-
-//             """
+            path "*" , emit:txts
 
 
+        script:
 
+            """
 
+            cd tables
+            ${projectDir}/templates/vs2_vs_.sh
 
+            """
 
-
-
-
-
-
-// }
+}
 
 
 process QMD {
@@ -338,7 +327,7 @@ workflow  NOGBC {
         ch_qmd
             | view
        // QMD(params.id, params.ref, ch_target, ch_figures, params.quarto, params.genome, params.annots, ch_qmd)
-
+        DS(params.id, SARTOOLS.out.tables)
 }
 
 
