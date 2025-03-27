@@ -233,7 +233,7 @@ process DS {
 
         output:
 
-            path "*" , emit:txts
+            path "*txt" , emit:txts
 
 
         script:
@@ -334,7 +334,7 @@ workflow  NOGBC {
             | view
         SARTOOLS.out.tables.view()    
        // QMD(params.id, params.ref, ch_target, ch_figures, params.quarto, params.genome, params.annots, ch_qmd)
-       // DS(params.id, SARTOOLS.out.tables)
+       DS(params.id, SARTOOLS.out.tables)
        // DS.out.txts.view()
 }
 
