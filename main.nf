@@ -66,7 +66,7 @@ process SARTOOLS {
         output:
              path "*"                              , emit: sartoolsOut
              path "figures/*png"                   , emit: figures
-             path "tables/"                        , emit: tables
+             path "tables/*txt"                    , emit: tables
 
         script:
 
@@ -240,7 +240,7 @@ process DS {
 
             """
 
-            cd tables
+            
             mkdir others
             mv  *.txt others
             cd others
