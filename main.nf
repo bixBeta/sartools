@@ -276,7 +276,7 @@ process RDS {
             path "*.csv"     , emit: eigen
             path "*.RDS"     , emit: eigenrds
             path "*.png"     , emit: ggpca    
-
+            path "*.txt"     , emit: target
 
         script:
 
