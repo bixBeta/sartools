@@ -76,7 +76,7 @@ process SARTOOLS {
 
         """
 
-        Rscript ${projectDir}/templates/SAR_tools.R ${id} ${laubchDir}/${target} ${projectDir}
+        Rscript ${projectDir}/templates/SAR_tools.R ${id} ${launchDir}/${target} ${projectDir}
 
         """
 
