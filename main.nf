@@ -253,7 +253,7 @@ process QMD {
             val(quarto)
             val(genome)
             val(annots)
-
+            val(qmd)
 
     output:
 
@@ -262,7 +262,11 @@ process QMD {
     
     script:
 
-        template "makeReport.sh"
+        """
+
+        quarto render ${qmd} -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
+
+        """
 
 
 
@@ -308,8 +312,8 @@ workflow  NOGBC {
         ch_figures = SARTOOLS.out.figures
         
         ch_all     = SARTOOLS.out.sartoolsOut
-        
-        QMD(params.id, params.ref, ch_target, ch_figures, params.quarto, params.genome, params.annots)
+        ch_qmd     = channel.value("${projectDir}/templates/qmds/nogbcov-report-nf.qmd")
+        QMD(params.id, params.ref, ch_target, ch_figures, params.quarto, params.genome, params.annots, ch_qmd)
 
 }
 
