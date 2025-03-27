@@ -42,7 +42,7 @@ knit_full_filtered(){
 
 knit_nogbcov(){
 
-  cp ${projectDir}/templates/qmds/nogbcov-report-nf.qmd 
+  cp ${projectDir}/templates/qmds/nogbcov-report-nf.qmd .
   
   quarto render nogbcov-report-nf.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
 
