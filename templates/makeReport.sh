@@ -16,6 +16,8 @@ display_usage(){
 }
 
 
+export XDG_CACHE_HOME=/tmp/quarto-cache
+mkdir -p /tmp/quarto-cache
 
 knit_full_report(){
 
