@@ -263,6 +263,8 @@ process QMD {
     script:
 
         """
+        export XDG_CACHE_HOME=/tmp/quarto-cache
+        mkdir -p /tmp/quarto-cache
 
         quarto render ${qmd} -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
 
