@@ -355,6 +355,7 @@ process RDS {
 
 }
 
+process SAR {
 
 
 
@@ -443,7 +444,7 @@ workflow  NOGBC {
         VS.out.txts.view()
 
         RDS(params.id, SARTOOLS.out.sarimage)
-
+        SAR(params.id, )
 }
 
 
