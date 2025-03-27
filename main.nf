@@ -83,7 +83,9 @@ process SARTOOLS {
             targetFile <- "${target}"
             wd <- "${launchDir}"
             templates <- "${projectDir}"
-            
+
+            .libPaths("/home/rstudio/R/x86_64-pc-linux-gnu-library/4.0")
+
             
             library(SARTools)
             getwd()
