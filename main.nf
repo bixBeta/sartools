@@ -52,7 +52,7 @@ Args:
 process SARTOOLS {
 
         tag "${id}"
-        label "sar_tools"
+        label "process_sartools"
 
         publishDir "${id}_SAR-Tools/Reports", mode: 'copy', pattern: "*.txt"
         publishDir "${id}_SAR-Tools/Reports", mode: 'copy', pattern: "*_EIGENVALUES.csv"
@@ -85,7 +85,7 @@ process SARTOOLS {
 process QMD {
 
        tag "${id}"
-       label "qmds"
+       label "process_sartools"
        publishDir "${id}_SAR-Tools/Reports", mode: 'copy', pattern: "*html"
 
        input:
@@ -114,7 +114,7 @@ process QMD {
 process GBCOV {
 
         tag "${id}"
-        label "gbcov"
+        label "process_sartools"
 
         input:
             path(pdf)
