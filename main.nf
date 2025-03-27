@@ -242,7 +242,7 @@ process SARTOOLS {
 process QMD {
 
        tag "${id}"
-       label "process_sartools"
+       label "process_quarto"
        publishDir "${id}_SAR-Tools/Reports", mode: 'copy', pattern: "*html"
 
        input:
