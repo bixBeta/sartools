@@ -54,9 +54,6 @@ process SARTOOLS {
         tag "${id}"
         label "process_sartools"
 
-        publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*.txt"
-        publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*_EIGENVALUES.csv"
-        publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*_PC1_PC2.png"
         publishDir "${id}_SAR-Tools/"       , mode: 'symlink', overwrite: true, pattern: "*RData"
 
         input:
@@ -215,11 +212,51 @@ process SARTOOLS {
 
         """
 
+        """
+            cd tables
+            ${projectDir}templates/vs2_vs_.sh 
+            cd ..
+
+        """
 
 
 
 }
 
+// process DS {
+
+//         tag "${id}"
+//         label "process_sartools"
+
+//         publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*.txt"
+//         publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*_EIGENVALUES.csv"
+//         publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*_PC1_PC2.png"
+
+//         input:
+//             val(id)
+//             val(ref)
+//             path(target)
+//             path(ch_counts)
+
+//         output:
+
+
+
+//         script:
+
+//             """
+
+
+
+
+
+
+
+
+
+
+
+// }
 
 
 process QMD {
