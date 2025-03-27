@@ -401,7 +401,7 @@ process SAR {
                 for (i in 1:length(fileNames)) {
                 
                 contrasts.list[[i]] <- read.table(file= filePath[i], header = T, sep = "\t")
-                names(contrasts.list)[[i]] <- strsplit(fileNames[i], "\\\.")[[1]][1]
+                names(contrasts.list)[[i]] <- strsplit(fileNames[i], '\\\.')[[1]][1]
 
                 }
 
