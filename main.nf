@@ -357,6 +357,115 @@ process RDS {
 
 process SAR {
 
+        tag "${id}"
+        label "process_sartools"
+
+        publishDir "${id}_SAR-Tools/Reports", mode: 'symlink', overwrite: true, pattern: "*.txt"
+
+
+        input:
+            val(id)
+            path(txts)
+
+            // val(ref)
+            // path(target)
+            // path(ch_counts)
+
+        output:
+
+            path "*txt" , emit: finalsar
+
+
+
+        script:
+
+            """
+
+                #!/usr/bin/env Rscript
+
+                .libPaths("/home/rstudio/R/x86_64-pc-linux-gnu-library/4.0")
+
+
+                suppressPackageStartupMessages(library(dplyr))
+
+
+
+                dir = paste0(getwd(), "/")
+
+                fileNames <- list.files( dir, pattern = ".complete")
+                filePath <- paste0(dir, fileNames)
+
+                # import SAR tool files as objects 
+
+                contrasts.list = list()
+                for (i in 1:length(fileNames)) {
+                
+                contrasts.list[[i]] <- read.table(file= filePath[i], header = T, sep = "\t")
+                names(contrasts.list)[[i]] <- strsplit(fileNames[i], "\\.")[[1]][1]
+
+                }
+
+
+                z <- c("dispGeneEst","dispFit","dispMAP","dispersion","betaConv","maxCooks" )
+                contrasts.list.rm.z = lapply(X = contrasts.list, FUN = function(x){
+                x %>% select(-all_of(z))
+                })
+
+
+
+                contrasts.list.final = list()
+
+                for (i in 1:length(contrasts.list.rm.z)) {
+                contrasts.list.final[[i]] <- 
+                    contrasts.list.rm.z[[i]] %>% rename(!!paste0(names(contrasts.list.rm.z)[[i]],".FoldChange") := FoldChange,
+                                                !!paste0(names(contrasts.list.rm.z)[[i]],".log2FoldChange") := log2FoldChange,
+                                                !!paste0(names(contrasts.list.rm.z)[[i]],".stat") := stat,
+                                                !!paste0(names(contrasts.list.rm.z)[[i]],".pvalue") := pvalue,
+                                                !!paste0(names(contrasts.list.rm.z)[[i]],".padj") := padj)
+                
+                names(contrasts.list.final)[[i]] <- names(contrasts.list.rm.z)[[i]]
+                }
+                
+                ref.df = contrasts.list.final[[1]]
+
+                if (length(contrasts.list.final) == 1) {
+                
+                
+                write.table(ref.df, paste0(arg[1],".final.txt"), sep = "\t", quote = F, row.names = F)
+                system(paste("mv *.final.txt ../ "))
+                
+
+                
+                message("")
+                message("Only 1 DESeq2 contrast available")
+                
+                
+                } else {
+                
+                tables.for.join = lapply(contrasts.list.final[-1], function(x){
+                    
+                    x = x %>% data.frame %>% select(Id,matches("vs"))
+                    
+                })
+                
+                table.joined = suppressMessages(Reduce(f = full_join, tables.for.join))
+                
+                final.df = left_join(ref.df, table.joined, by = "Id")
+                write.table(final.df, paste0(arg[1],".final.txt"), sep = "\t", quote = F, row.names = F)
+                
+                # system(paste("mv *.final.txt ../ "))
+
+                message("")
+                message("More than 1 DESeq2 contrast's available")
+                
+                }
+
+
+
+
+            """
+
+}
 
 
 
