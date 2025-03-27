@@ -65,11 +65,11 @@ process SARTOOLS {
 
         
         output:
-            //path "*"                              , emit: sartoolsOut
+            // path "*"                              , emit: sartoolsOut
             path "figures/*png"                   , emit: figures
             path "tables/*txt"                    , emit: tables
             path "*_rawCounts.txt"                , emit: rawmatrix
-            
+            path "*RData"                         , emit: sarimage
         script:
 
             // template 'bash-template.sh' 
