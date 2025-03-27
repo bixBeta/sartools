@@ -5,7 +5,8 @@ params:
   genome: genome
   annot: annot
 date: today
-
+execute: 
+  cache: false
 
 title:  "`r params$title`"
 author: <a href="https://trex.biotech.cornell.edu/"> Transcriptional Regulation & Expression Facility </a>
