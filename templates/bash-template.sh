@@ -8,4 +8,4 @@ echo '""""""""""""""""""""""""""""""""""""""'
 
 
 
-Rscript ${projectDir}/templates/SAR_tools.R ${id} ${ref} ${launchDir}/${target} ${launchDir} ${projectDir}
+Rscript templates/SAR_tools.R ${id} ${ref} ${launchDir}/${target} ${launchDir} ${projectDir}
