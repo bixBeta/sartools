@@ -72,8 +72,13 @@ process SARTOOLS {
 
         script:
 
-            template 'bash-template.sh' 
-            
+            // template 'bash-template.sh' 
+
+        """
+
+        Rscript ${projectDir}/templates/SAR_tools.R ${id} ${laubchDir}/${target} ${projectDir}
+
+        """
 
 
 
