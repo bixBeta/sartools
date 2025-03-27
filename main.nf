@@ -80,7 +80,7 @@ process SARTOOLS {
             #args <-  commandArgs(trailingOnly = T)
             pin <- "${id}"
             ref <- "${ref}"
-            targetFile <- "${target}"
+            targetFile <- "${launchDir}/targetFile.txt"
             wd <- "${launchDir}"
             templates <- "${projectDir}"
 
