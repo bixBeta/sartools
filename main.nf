@@ -78,11 +78,11 @@ process SARTOOLS {
 
         #!/usr/bin/env Rscript
             #args <-  commandArgs(trailingOnly = T)
-            pin <- ${id}
-            ref <- ${ref}
-            targetFile <- ${target}
-            wd <- ${launchDir}
-            templates <- ${projectDir}
+            pin <- "${id}"
+            ref <- "${ref}"
+            targetFile <- "${target}"
+            wd <- "${launchDir}"
+            templates <- "${projectDir}"
             
             if (length(args)<=1) {
               print(" Usage = Rscript test.R <pin> <base-line>")
