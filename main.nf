@@ -553,7 +553,7 @@ workflow  NOGBC {
         VS.out.txts.view()
 
         RDS(params.id, SARTOOLS.out.sarimage)
-        SAR(params.id, )
+        SAR(params.id, VS.out.txts)
 }
 
 
