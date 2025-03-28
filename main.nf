@@ -545,12 +545,12 @@ workflow  NOGBC {
         
 //        ch_all     = SARTOOLS.out.sartoolsOut
         ch_qmd     = channel.value("${projectDir}/assets/qmds/nogbcov-report-nf.qmd")
-        ch_qmd
-            | view
+//        ch_qmd
+//            | view
         SARTOOLS.out.tables.view()    
        // QMD(params.id, params.ref, ch_target, ch_figures, params.quarto, params.genome, params.annots, ch_qmd)
         VS(params.id, SARTOOLS.out.tables)
-        VS.out.txts.view()
+       // VS.out.txts.view()
 
         RDS(params.id, SARTOOLS.out.sarimage)
         SAR(params.id, VS.out.txts)
