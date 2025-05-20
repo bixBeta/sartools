@@ -25,7 +25,7 @@ featuresToRemove <- c("alignment_not_unique",        # names of the features to 
                      "ambiguous", "no_feature",     # (specific HTSeq-count information and rRNA for example)
                     "not_aligned", "too_low_aQual")# NULL if no feature to remove
 
-featuresToRemove <- NULL
+# featuresToRemove <- NULL
 varInt <- "group"                                    # factor of interest
 condRef <- ref                                    # reference biological condition
 
