@@ -21,9 +21,7 @@ format:
       sidebar-width: 350px
       body-width: 1600px
 ---
-
-------------------------------------------------------------------------
-
+  
 ```{=html}
 <style type="text/css">
   .quarto-title-banner {
@@ -48,12 +46,12 @@ format:
 
 </style>
 ```
-[![](https://raw.githubusercontent.com/bixBeta/atac/main/img/trex-mini.png){.trex-logo fig-align="right"}](https://trex.biotech.cornell.edu/)
+
+[![](/Users/fa286/Downloads/c.png){.trex-logo fig-align="right" width="60"}](https://trex.biotech.cornell.edu/)
 
 <hr>
-
   
-This R Markdown aims to provide a brief summary of all diagnostic plots for your TREx experiment.<br> Fastq files are available for download upon request.
+  This R Markdown aims to provide a brief summary of all diagnostic plots for your TREx experiment.<br> `FASTQ` files are available for download upon request.
 
 > Users receiving files from RSCshare are advised to delete all files once they have secure copied them to their own respective drives.<br> A copy of your data will be securely archived on our end and may incur a fee for future retrievals.
 
@@ -70,10 +68,21 @@ datatable(tf, options = list(scrollX = TRUE)) |>
 
 ```
 
+## Pre-Processing
 
-The filtered/trimmed reads were processed with mirDeep2 ` `r params$genome` ` reference and ` `r params$annot` ` annotations <br>
+The raw fastq reads were first processed with __fastp__  package to:
+
+
+- Trim for low quality reads;
+- 2 color chemistry bias (next-seq);
+- Trim for noisy short fragments;
+- Trim for adapter sequence;
+
+
+The filtered reads were then aligned to ` `r params$genome` ` reference genome with ` `r params$annot` ` annotations <br>
   
-
+For default parameters used within TREx pipeline's, please refer to the code modules available on Github at <a href="https://github.com/bixBeta/smrna/tree/main/modules">this </a> link. 
+  
 
 ## Counts Distribution
   
@@ -110,3 +119,4 @@ citation("SARTools")
 ```
 
 </details>
+  
