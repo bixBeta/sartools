@@ -1,8 +1,8 @@
-`nextflow pull bixBeta/sartools -r main `
+`nextflow pull bixBeta/sartools -r gg02 `
 
 
 
 
-`nextflow run bixBeta/sartools -r main --help `
+`nextflow run bixBeta/sartools -r gg02 --help `
 
 ![](img/help.png)
