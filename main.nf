@@ -84,7 +84,7 @@ process SARTOOLS {
 
 process QMD {
 
-       tag "${id}"
+       tag "Converting pdf's to pngs"
        label "qmds"
        publishDir "${id}_SAR-Tools/Reports", mode: 'copy', pattern: "*html"
 
