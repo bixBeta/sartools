@@ -47,7 +47,7 @@ format:
 </style>
 ```
 
-[![](/Users/fa286/Downloads/c.png){.trex-logo fig-align="right" width="60"}](https://trex.biotech.cornell.edu/)
+[![](https://raw.githubusercontent.com/bixBeta/atac/main/img/trex-mini.png){.trex-logo fig-align="right"}](https://trex.biotech.cornell.edu/)
 
 <hr>
   
