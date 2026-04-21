@@ -8,4 +8,4 @@
 
 `nextflow run bixBeta/sartools -r main --help `
 
-![](img/help.png)
+![](img/success-g2.png)
