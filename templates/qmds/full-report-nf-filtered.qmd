@@ -205,7 +205,11 @@ citation("SARTools")
 
 <details>
 
-```{r echo=FALSE, eval=T}
+```{r echo=FALSE, eval=T, message=FALSE, warning=FALSE}
+suppressPackageStartupMessages({
+  library(SARTools)
+  library(DESeq2)
+})
 sessionInfo()
 ```
 
