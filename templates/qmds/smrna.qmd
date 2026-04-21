@@ -119,4 +119,13 @@ citation("SARTools")
 ```
 
 </details>
-  
+
+## Session Info
+
+<details>
+
+```{r echo=FALSE, eval=T}
+sessionInfo()
+```
+
+</details>
