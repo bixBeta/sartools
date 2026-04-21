@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libjpeg-dev \
     imagemagick \
     openssh-client \
+    pandoc \
     && rm -rf /var/lib/apt/lists/*
 
 # Quarto (pinned for reproducibility; detects arm64 vs amd64 automatically)
