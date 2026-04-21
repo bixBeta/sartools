@@ -25,7 +25,7 @@ RUN ARCH=$(dpkg --print-architecture) \
     && rm quarto-${QUARTO_VERSION}-linux-${ARCH}.deb
 
 # Point rmarkdown at Quarto's bundled pandoc (avoids "pandoc not found" errors)
-ENV RSTUDIO_PANDOC=/usr/lib/quarto/bin
+ENV RSTUDIO_PANDOC=/opt/quarto/bin/tools
 
 # Use Posit Package Manager for pre-built Linux binaries (Ubuntu 24.04 noble)
 # This avoids source compilation failures (cmake, boost, etc.)
