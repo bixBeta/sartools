@@ -9,3 +9,10 @@
 `nextflow run bixBeta/sartools -r main --help `
 
 ![](img/help.png)
+
+---
+
+> **BioHPC Server Users:** Use the `g2` branch which is configured for Singularity instead of Docker.
+> ```
+> nextflow run bixBeta/sartools -r g2 --help
+> ```
