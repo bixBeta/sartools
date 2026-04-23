@@ -14,9 +14,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libtiff5-dev \
     libjpeg-dev \
     imagemagick \
+    ghostscript \
     openssh-client \
     pandoc \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && sed -i 's/rights="none" pattern="PDF"/rights="read|write" pattern="PDF"/' /etc/ImageMagick-6/policy.xml
 
 # Quarto (pinned for reproducibility; detects arm64 vs amd64 automatically)
 ARG QUARTO_VERSION=1.5.57
