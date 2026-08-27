@@ -35,7 +35,7 @@ log.info """
 S A R  T O O L S     W O R K F L O W  -  @bixBeta
 =======================================================================================================================================================================
 Usage:
-    nextflow run https://github.com/bixbeta/sartools -r main < args ... >
+    nextflow run https://github.com/bixbeta/sartools -r ${workflow.revision ?: 'main'} < args ... >
 
 Args:
     * --id             : TREx Project ID 
