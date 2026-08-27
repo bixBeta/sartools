@@ -1,0 +1,150 @@
+name: ci
+
+# Syntax + wiring check for the main (Docker) branch. Everything here runs off
+# --help and the resolved config, so no Docker images, no containers and no
+# real data are needed.
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - main.nf
+      - nextflow.config
+      - 'templates/**'
+      - .github/workflows/ci.yml
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: check (NF ${{ matrix.nxf_ver }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 25.04.1 is what the server runs; 25.10.7 is the latest 25.x, so a
+        # regression in either the floor or the ceiling shows up. Nextflow 26
+        # ships a strict script syntax that rejects top level statements, and
+        # this pipeline keeps params + if(params.help) + the banner at file
+        # scope, so it will not compile there. Pinned below 26 deliberately.
+        nxf_ver: [ '25.04.1', '25.10.7' ]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install Nextflow
+        uses: nf-core/setup-nextflow@v2
+        with:
+          version: ${{ matrix.nxf_ver }}
+
+      # Parses main.nf and exercises the help path. A syntax error, a bad
+      # channel expression or a broken GString in the banner fails here.
+      - name: Pipeline compiles and --help runs
+        run: |
+          set -euo pipefail
+          nextflow run . --help | tee /tmp/help.txt
+          grep -q 'S A R  T O O L S' /tmp/help.txt
+
+      # The QMD process takes its inputs positionally, so a param added to the
+      # banner but not threaded through is invisible at runtime: there is no
+      # nextflow_schema.json, so an unknown --flag is accepted silently and the
+      # report renders with a stale value instead of failing. Check the whole
+      # chain rather than trusting the help text.
+      - name: Every documented param reaches the templates
+        run: |
+          set -euo pipefail
+          for p in id ref target genome quarto annots trimmer; do
+            grep -q -- "--$p " /tmp/help.txt || { echo "--$p missing from --help"; exit 1; }
+            grep -q "params\.$p\b" main.nf   || { echo "params.$p missing from main.nf"; exit 1; }
+          done
+
+          # QMD arity: declared inputs must match every call site, or Nextflow
+          # binds the wrong value to the wrong variable.
+          declared=$(awk '/^process QMD/,/^    output:/' main.nf | grep -c 'val(\|path(')
+          echo "QMD declares $declared inputs"
+          awk '/^workflow/{wf=$2} /QMD\(/{n=gsub(/,/,",")+1; printf "%s line %s args=%s\n", wf, NR, n;
+               if (n != d) { printf "ARITY MISMATCH in %s\n", wf; bad=1 } }
+               END{ exit bad+0 }' d="$declared" main.nf
+
+      # Guards the failure mode this branch actually hit: the qmds hardcoded
+      # the trimmer name, so reports named the wrong tool with no error.
+      - name: Trimmer is parameterised, not hardcoded
+        run: |
+          set -euo pipefail
+          ! grep -rn '__fastp__' templates/qmds/ || { echo "hardcoded fastp left in a template"; exit 1; }
+
+          # every qmd makeReport.sh renders must declare the param and use it
+          for f in $(grep -oE '[a-z0-9-]+\.qmd' templates/makeReport.sh | sort -u); do
+            grep -q 'trimmer:' "templates/qmds/$f" || { echo "$f missing trimmer param"; exit 1; }
+            grep -q 'params\$trimmer' "templates/qmds/$f" || { echo "$f never uses params\$trimmer"; exit 1; }
+          done
+
+          # and every render call must pass it
+          renders=$(grep -c 'quarto render' templates/makeReport.sh)
+          passed=$(grep -c 'trimmer:\${trimmer}' templates/makeReport.sh)
+          [ "$renders" = "$passed" ] || { echo "$passed of $renders render calls pass trimmer"; exit 1; }
+
+      # This branch runs under Docker. A careless merge from g2 would swap the
+      # executor to Singularity and only fail at run time, so assert against
+      # the resolved config rather than the source.
+      - name: Config still targets Docker
+        run: |
+          set -euo pipefail
+          nextflow config . | tee /tmp/cfg.txt
+          grep -q '^docker {' /tmp/cfg.txt        || { echo "docker block gone"; exit 1; }
+          grep -q 'enabled = true' /tmp/cfg.txt   || { echo "docker not enabled"; exit 1; }
+          ! grep -q 'singularity {' /tmp/cfg.txt  || { echo "singularity block leaked in from g2"; exit 1; }
+          # makeReport.sh scp's the qmds from ${projectDir}; without the mount
+          # they are missing inside the container. Match the workspace path
+          # itself, anchored on the token end so a longer path cannot match as
+          # a prefix.
+          grep -qE -- "-v ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE}( |')" /tmp/cfg.txt \
+            || { echo "projectDir mount missing"; exit 1; }
+          # plain GHCR refs here; the docker:// prefix is g2's Singularity form
+          test "$(grep -c "container = 'ghcr.io/" /tmp/cfg.txt)" = 3
+          ! grep -q "docker://" /tmp/cfg.txt || { echo "docker:// prefix leaked in from g2"; exit 1; }
+
+      # Bash templates are rendered by Nextflow, not sourced, so a syntax error
+      # only surfaces when a task runs.
+      - name: Bash templates parse
+        run: |
+          set -euo pipefail
+          for f in templates/*.sh; do bash -n "$f" || exit 1; done
+
+      # The README code block is the rendered --help output. It went stale as a
+      # screenshot before; this keeps it honest. The -r revision differs by
+      # design (workflow.revision is null locally, so --help prints the "main"
+      # fallback while the README shows g2), so normalise that one token.
+      - name: README help block matches actual output
+        run: |
+          set -euo pipefail
+          sed -n '/^S A R  T O O L S/,/--trimmer/p' /tmp/help.txt \
+            | sed -E 's@-r [A-Za-z0-9._-]+ < args@-r REV < args@' > /tmp/a.txt
+          sed -n '/^S A R  T O O L S/,/--trimmer/p' README.md \
+            | sed -E 's@-r [A-Za-z0-9._-]+ < args@-r REV < args@' > /tmp/b.txt
+          diff -u /tmp/b.txt /tmp/a.txt || {
+            echo "README help block is out of date - repaste 'nextflow run . --help'"; exit 1; }
+
+      # Non blocking: reports what the v2 strict parser makes of the pipeline,
+      # so the Nextflow 26 gap is visible before it becomes mandatory.
+      - name: Strict syntax (NXF_SYNTAX_PARSER=v2) report
+        continue-on-error: true
+        run: |
+          set +e
+          echo "############ config ############"
+          NXF_SYNTAX_PARSER=v2 nextflow config . > /tmp/v2cfg.txt 2>&1
+          echo "exit=$?"
+          grep -viE 'unrecognized config option' /tmp/v2cfg.txt | grep -iE 'error|warn' | head -20
+
+          echo
+          echo "############ script ############"
+          NXF_SYNTAX_PARSER=v2 nextflow run . --help > /tmp/v2run.txt 2>&1
+          echo "exit=$?"
+          grep -vE 'Unrecognized config option' /tmp/v2run.txt \
+            | grep -iE '^error|error:|cannot|not allowed|invalid|unexpected' | head -40
