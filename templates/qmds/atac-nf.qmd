@@ -4,6 +4,7 @@ params:
   id: trex_id
   genome: genome
   annot: annot
+  trimmer: fastp
 date: today
 
 
@@ -72,7 +73,7 @@ datatable(tf, options = list(scrollX = TRUE)) |>
 
 ## Pre-Processing
 
-The raw fastq reads were first processed with __fastp__  package to:
+The raw fastq reads were first processed with __`r params$trimmer`__  package to:
 
 
 - Trim for low quality reads;
