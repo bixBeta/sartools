@@ -21,7 +21,7 @@ knit_full_report(){
 
   scp ${projectDir}/templates/qmds/full-report-nf.qmd .
   
-  quarto render full-report-nf.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
+  quarto render full-report-nf.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -P trimmer:${trimmer} -o ${id}-Report.html
 
   rm *.qmd
 
@@ -31,7 +31,7 @@ knit_full_filtered(){
 
   scp ${projectDir}/templates/qmds/full-report-nf-filtered.qmd .
   
-  quarto render full-report-nf-filtered.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
+  quarto render full-report-nf-filtered.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -P trimmer:${trimmer} -o ${id}-Report.html
 
   rm *.qmd
 
@@ -42,7 +42,7 @@ knit_nogbcov(){
 
   scp ${projectDir}/templates/qmds/nogbcov-report-nf.qmd .
   
-  quarto render nogbcov-report-nf.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
+  quarto render nogbcov-report-nf.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -P trimmer:${trimmer} -o ${id}-Report.html
 
   rm *.qmd
 
@@ -53,7 +53,7 @@ knit_nogbcov_filtered(){
 
   scp ${projectDir}/templates/qmds/nogbcov-filtered-nf.qmd .
   
-  quarto render nogbcov-filtered-nf.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
+  quarto render nogbcov-filtered-nf.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -P trimmer:${trimmer} -o ${id}-Report.html
 
   rm *.qmd
 
@@ -64,7 +64,7 @@ knit_atac(){
 
   scp ${projectDir}/templates/qmds/atac-nf.qmd .
   
-  quarto render atac-nf.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
+  quarto render atac-nf.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -P trimmer:${trimmer} -o ${id}-Report.html
 
   rm *.qmd
 
@@ -75,7 +75,7 @@ knit_atac_filtered(){
 
   scp ${projectDir}/templates/qmds/atac-filtered-nf.qmd .
   
-  quarto render atac-filtered-nf.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
+  quarto render atac-filtered-nf.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -P trimmer:${trimmer} -o ${id}-Report.html
 
   rm *.qmd
 
@@ -86,7 +86,7 @@ knit_smrna(){
 
   scp ${projectDir}/templates/qmds/smrna.qmd .
   
-  quarto render smrna.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -o ${id}-Report.html
+  quarto render smrna.qmd -P title:${id} -P genome:${genome} -P annot:${annots} -P trimmer:${trimmer} -o ${id}-Report.html
 
   rm *.qmd
 

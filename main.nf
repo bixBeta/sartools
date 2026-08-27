@@ -6,8 +6,9 @@ nextflow.enable.dsl=2
 params.target           = "targetFile.txt"
 params.id               = "TREX_id"
 params.genome           = "null"
-params.annots           = "ENSEMBL"       
-params.ref              = null 
+params.annots           = "ENSEMBL"
+params.trimmer          = "fastp"
+params.ref              = null
 params.quarto           = "k3"
 params.counts           = "${launchDir}/rawCounts/*rawCounts"
 params.help             = false
@@ -43,6 +44,7 @@ Args:
     * --genome         : Reference genome (GRCh38, GRCm38 etc.)
     * --quarto         : < default: k3 > (render params used in makeReport.sh)
     * --annots         : Annotations source (NCBI or < default: ENSEMBL >)
+    * --trimmer        : Read pre-processing tool named in the report (< default: fastp >)
 
 """
 
@@ -96,6 +98,7 @@ process QMD {
             val(quarto)
             val(genome)
             val(annots)
+            val(trimmer)
 
 
     output:
@@ -152,7 +155,7 @@ workflow  NOGBC {
         
         ch_all     = SARTOOLS.out.sartoolsOut
         
-        QMD(params.id, params.ref, ch_target, ch_figures, params.quarto, params.genome, params.annots)
+        QMD(params.id, params.ref, ch_target, ch_figures, params.quarto, params.genome, params.annots, params.trimmer)
 
 }
 
@@ -166,7 +169,7 @@ workflow  SMALL {
         
         ch_all     = SARTOOLS.out.sartoolsOut
         
-        QMD(params.id, params.ref, ch_target, ch_figures, params.quarto, params.genome, params.annots)
+        QMD(params.id, params.ref, ch_target, ch_figures, params.quarto, params.genome, params.annots, params.trimmer)
 
 }
 
@@ -189,7 +192,7 @@ workflow  GBC {
         
         ch_all     = SARTOOLS.out.sartoolsOut
         
-        QMD(params.id, params.ref, ch_target, ch_figures, params.quarto, params.genome, params.annots)
+        QMD(params.id, params.ref, ch_target, ch_figures, params.quarto, params.genome, params.annots, params.trimmer)
 
 }
 
