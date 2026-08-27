@@ -4,16 +4,27 @@ name: ci
 # off --help and the resolved config, so no Singularity, no containers and no
 # real data are needed.
 
+# Code only. Docs, images and licence edits do not run the matrix; use the
+# workflow_dispatch button if you want a run anyway.
 on:
   push:
     branches: [ g2 ]
     paths:
       - main.nf
       - nextflow.config
+      - Dockerfile
       - 'templates/**'
       - .github/workflows/ci.yml
+  # kept in step with the push list above; GitHub Actions does not support
+  # YAML anchors, so the two cannot be shared
   pull_request:
     branches: [ g2 ]
+    paths:
+      - main.nf
+      - nextflow.config
+      - Dockerfile
+      - 'templates/**'
+      - .github/workflows/ci.yml
   workflow_dispatch:
 
 jobs:
